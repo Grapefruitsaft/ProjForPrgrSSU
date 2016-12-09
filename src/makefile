@@ -1,7 +1,7 @@
 OUTDIR = ./bin
 DATDIR = ./data
 DATOUTDIR = ./bin/data
-BUILD = project.out
+BUILD = project
 OBJS = main.o fileIO.o login.o manageData.o menu.o
 DATAS = book.txt borrow.txt client.txt
 

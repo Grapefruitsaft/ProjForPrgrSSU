@@ -199,6 +199,7 @@ void S_by_ISBN()
 	scanf("%ld", &s_temp_l);
 	int keys[100];//입력받은 ISBN과 일치하는 도서의 번호를 입력받는 배열
 	int cnt, i, cy=0;
+	long  last_ISBN = 0;
 	char yn = 'Y';
 
 	if((cnt = ISBN2keys_on_book(keys, s_temp_l)) != 0)//ISBN과 일치하는 도서의 번호를 받아온다
@@ -210,6 +211,9 @@ void S_by_ISBN()
 			{
 				if(get_book(keys[i], &result) == Success)
 				{
+					if (result->ISBN == last_ISBN)//이미 이전에 똑같은 책이 출력되었다면 출력하지않는다.
+						continue;
+
 					if((result -> borrow_Y_N) == 'Y')
 					{
 						cy++;
@@ -224,6 +228,7 @@ void S_by_ISBN()
 					printf("도서명: %s\n출판사: %s\n저자명:%s\nISBN: %ld\n소장처: %s\n",\
 							result -> name, result -> publisher, result -> author, result -> ISBN, result -> owner);//도서정보 출력
 					printf("대여가능 여부: %c(%d/%d)\n", yn, cy, cnt);
+					last_ISBN = result->ISBN;//중복출력을 방지하기위한 변수
 				}
 				else
 				{
@@ -825,7 +830,7 @@ void L_by_ISBN()
 void Return_book()
 {
 	int r_temp_i;//도서를 반납하는 사용자의 학번을 입력받는 변수
-	int keys[100];//입력받은 학번과 일치하는 도서번호의 대여번호 저장하는 벼을
+	int keys[100];//입력받은 학번과 일치하는 대여정보의 도서번호 저장하는 벼을
 	int cnt, i;
 	char day[7][15] = {"일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"};
 	const Borrow *result = NULL;
@@ -840,18 +845,18 @@ void Return_book()
 	printf("학번을 입력하세요 : ");
 	scanf("%d", &r_temp_i);
 
-	if((cnt = sch_num2keys_on_borrow(keys, r_temp_i)) != 0)
+	if((cnt = sch_num2keys_on_borrow(keys, r_temp_i)) != 0)//입력받은  학번과 일치하는 도서번호를 저장한다.
 	{
 		printf("\n>> 회원의 대여 목록 <<\n");
 		for(i = 0; i < cnt; i++)
 		{
-			if(get_borrow(keys[i], &result) == Success)
+			if(get_borrow(keys[i], &result) == Success)//대여정보를 받아온다.
 			{
 				const time_t BT = result -> borrow_day;
 				const time_t RT = result -> return_day;
 				bt = localtime(&BT);
 
-				if(get_book(keys[i], &Binfo) == Success)
+				if(get_book(keys[i], &Binfo) == Success)//
 				{
 					printf("도서번호: %d\n도서명: %s\n", result  -> book_num,Binfo -> name);
 					printf("대여일자: %d년 %d월 %d일 %s\n", bt -> tm_year  + 1900, bt -> tm_mon + 1, bt -> tm_mday, day[bt -> tm_wday]);

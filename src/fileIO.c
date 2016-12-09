@@ -308,7 +308,7 @@ int get_borrow_file_data(FILE *fp)
 			return 0;
 		a = fgetc(fp);
 	}
-
+	fseek(fp,-1,SEEK_CUR);
 	return 1;
 }
 

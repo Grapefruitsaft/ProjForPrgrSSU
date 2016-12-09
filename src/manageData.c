@@ -203,7 +203,7 @@ void free_all_borrow(Borrow *obj)
 /// 구조체의 특정 값을 검색하여 해당하는 값의 개수를 반환합니다.
 /// sth, key는 CODE 매크로와 같이 넣어주면 됩니다.
 /// T는 thg의 자료형을 의미합니다. thg는 비교할 값
-/// same는 T 자료형 변수 둘이 일치하는지 확인하는 함수이름이 필요합니다.
+/// compare는 T 자료형 변수 둘이 일치하는지 확인하는 함수이름이 필요합니다.
 /// 둘이 일치하면 1을 반환해야 합니다.
 #define GET_KEY_FROM_THING(sth, key, T, thg, compare)			\
 int thg##2keys_on_##sth(int * keys, T thg)						\
@@ -240,6 +240,8 @@ int intcomp(int a, int b){
 	return a == b;
 }
 
+/// 직접 접근 없이 책의 비율을 알아내는 일이 너무 어려웠기 때문에
+/// 따로 함수를 만듭니다.
 #define GET_RATIO_BOOKS_FROM_THG(T, thg) 								\
 int get_ratio_books_from_##thg(int ratio[][2], T thg)					\
 {																		\
@@ -281,6 +283,7 @@ CODE(Client, client, sch_num, int, sch_num)
 CODE(Book, book, book_num, long, ISBN)
 CODE(Borrow, borrow, book_num, int, book_num)
 
+// 필요에 따라 손쉽게 추가됩니다.
 GET_KEY_FROM_THING(client, sch_num, char*, name, strcomp)
 GET_KEY_FROM_THING(client, sch_num, char*, password, strcomp)
 
@@ -294,115 +297,3 @@ GET_KEY_FROM_THING(borrow, book_num, int, sch_num, intcomp)
 GET_RATIO_BOOKS_FROM_THG(char*, author)
 GET_RATIO_BOOKS_FROM_THG(char*, publisher)
 
-
-
-#ifdef DEBUG
-int main(void)
-{
-	int i = 0;
-	int j = 0;
-	int key = 0;
-	long sortKey = 0;
-	const Book* t = NULL;
-
-	init_all_list();
-	get_all_file_data();
-
-	while(1)
-	{
-		printf("\n디버깅 모드입니다.\n");
-		printf("1. 리스트 추가\n2. 리스트 제거\n3. 리스트 얻기\n4. 리스트 대체\n5. 현재 리스트 출력\n");
-		scanf("%d",&i);
-
-		switch(i)
-		{
-			case 1:
-				printf("추가할 key sortKey 입력 : ");
-				scanf("%d %ld", &key, &sortKey);
-				Book c = {key,sortKey, "Test"," ","Test"};
-				if (append_book(c) == Success)
-					printf("%d 추가 완료\n",key);
-				else
-					printf("추가 실패\n");
-				break;
-			case 2:
-				printf("제거할 key 입력 : ");
-				scanf("%d", &key);
-				if (remove_book(key) == Success)
-					printf("%d 제거 완료\n", key);
-				else
-					printf("제거 실패\n");
-				break;
-			case 3:
-				printf("얻을 key 입력 : ");
-				scanf("%d", &key);
-				if (get_book(key,&t) == Success)
-				{
-					printf("%d\n",t->book_num);
-				}
-				else
-					printf("얻기 실패\n");
-				break;
-			case 4:
-				printf("원래 key 바꿀 key : ");
-				scanf("%d %d",&key,&j);
-				Book f = {j,0};
-				if (get_book(key, &t) == Success)
-				{
-					if(replace_book(t,f) == Success)
-						printf("바꾸기 성공\n");
-					else
-						printf("바꾸기 실패\n");
-				}
-				else
-					printf("얻기 실패\n");
-				break;
-			case 5:
-				printf("리스트 출력\n");
-				list_book->current = list_book->head;
-				while(1)
-				{
-					printf("%d %ld %s %s\n",list_book->current->book_num,list_book->current->ISBN,list_book->current->name, list_book->current->author);
-					if (list_book->current->next == NULL)
-						break;
-					list_book->current = list_book->current->next;
-				}
-				break;
-			case 6:
-				printf("책이름 입력\n");
-				char tee[50];
-				int tem[50] = {0};
-				getchar();
-				scanf("%[^\n]",tee);
-				printf("%s 검색\n", tee);
-				int d = name2keys_on_book(tem, tee);
-				int e;
-				for (e = 0; e < d; e++)
-					printf("%d\n",tem[e]);
-				break;
-			case 7:
-				printf("출판사 이름 입력 \n");
-				char teq[50];
-				int tempdd[50][2];
-				getchar();
-				scanf("%[^\n]", teq);
-				
-				int u;
-				int cnt;
-
-				if((cnt = get_ratio_books_from_publisher(tempdd, teq)) != 0)
-				{
-					for (u = 0; u < cnt; u++)
-					{
-						printf("(%d/%d)\n",tempdd[u][0],tempdd[u][1]);
-					}
-				}
-				else
-					printf("그런 출판사 없는데..\n");
-				break;
-		}
-	}
-
-	return 0;
-}
-#endif

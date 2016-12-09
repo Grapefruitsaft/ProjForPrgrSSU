@@ -15,12 +15,12 @@ int Sign_down(void){
 	{                                 
 		remove_client(my_ID);//my_ID가 포함된 클라이언트 구조체 삭제
 		printf("\n회원 탈퇴가 성공적으로 실행되었습니다.\n다시 로그인 해주십시오.\n");
-		return -2;
+		return -1;
 	}
 	else
 	{
 		printf("\n대여한 도서가 있어, 탈퇴가 불가능합니다.\n");
-		return 0;
+		return 1;
 	}
 }
 
@@ -56,19 +56,18 @@ void Sign_up(void)
 	
 	printf("비밀번호: ");// 반복
 	scanf("%[^\n]",temp);
-	getchar();
+	while(getchar() != '\n');
 	client.password = (char *)malloc(sizeof(char) * (strlen(temp) + 1));
 	strcpy(client.password,temp);
 	
 	printf("주소: ");
 	scanf("%[^\n]",temp);
-	getchar();
+	while(getchar() != '\n');
 	client.address = (char *)malloc(sizeof(char) * (strlen(temp) + 1));
 	strcpy(client.address,temp);
 
 	printf("전화번호: ");
 	scanf("%[^\n]",temp);
-	getchar();
 	client.phone_num = (char *)malloc(sizeof(char) * (strlen(temp) + 1));
 	strcpy(client.phone_num,temp);
 	if(client.phone_num == '\0' || client.address == '\0' || client.password == '\0' || client.name == '\0' || client.sch_num == '\0'){// \n 입력받았을 경우 버그해결

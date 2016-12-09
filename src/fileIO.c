@@ -245,27 +245,6 @@ int get_client_file_data(FILE *fp)
 	}
 	fseek(fp,-1,SEEK_CUR);	
 
-/*	if(a == EOF)
-	{	
-		return 0;
-	}
-	else if(a == '\n')
-	{
-		while(a == '\n')
-		{
-			a=fgetc(fp);
-		}
-		fseek(fp,-1,SEEK_CUR);
-	
-		if(a == '|')
-			return 1;
-		else if(a == EOF)
-			return 0;
-	}
-	else
-	{
-		return 1;
-	}*/
 	return 1;
 }
 
@@ -278,14 +257,15 @@ int get_book_file_data(FILE *fp)
 	book -> book_num = atoi(get_oneWord(&fp));
 	if(list_book -> last_book_num < book -> book_num)
 		list_book -> last_book_num = book -> book_num;
+	
+	get_oneWord(&fp);
+	book -> name = (char *)malloc(sizeof(char) * (strlen(temp) + 1));
+	strcpy(book -> name,temp);
 
 	get_oneWord(&fp);
 	book -> publisher = (char *)malloc(sizeof(char) * (strlen(temp) + 1));
 	strcpy(book -> publisher,temp);
 	
-	get_oneWord(&fp);
-	book -> name = (char *)malloc(sizeof(char) * (strlen(temp) + 1));
-	strcpy(book -> name,temp);
 	
 	get_oneWord(&fp);
 	book -> author = (char *)malloc(sizeof(char) * (strlen(temp) + 1));
@@ -309,28 +289,6 @@ int get_book_file_data(FILE *fp)
 	fseek(fp,-1,SEEK_CUR);	
 	
 	
-	/*printf("/////%d/////",a);
-	if(a == EOF)
-	{	
-		return 0;
-	}
-	else if(a == '\n')
-	{
-		while(a == '\n')
-		{
-			a=fgetc(fp);
-		}
-		fseek(fp,-1,SEEK_CUR);
-	
-		if(a == '|')
-			return 1;
-		else if(a == EOF)
-			return 0;
-	}
-	else
-	{
-		return 1;
-	}*/
 	return 1;
 }
 	
@@ -351,27 +309,6 @@ int get_borrow_file_data(FILE *fp)
 		a = fgetc(fp);
 	}
 
-/*	if(fgetc(fp) == EOF)
-	{	
-		return 0;
-	}
-	else if(a == '\n')
-	{
-		while(a == '\n')
-		{
-			a=fgetc(fp);
-		}
-		fseek(fp,-1,SEEK_CUR);
-	
-		if(a == '|')
-			return 1;
-		else if(a == EOF)
-			return 0;
-	}
-	else
-	{
-		return 1;
-	}*/
 	return 1;
 }
 
@@ -522,6 +459,7 @@ int main(void)
 	init_all_list();
 	get_all_file_data();
 	free_all_node();
+	printf("%d\n", say_Book_list_num());
 	return 0;
 }
 #endif

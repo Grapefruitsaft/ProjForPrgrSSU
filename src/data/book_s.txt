@@ -1,8 +1,0 @@
-|400|0|(null)|(null)|(null)|(null)|(null)|
-|1113312|1424524121231|이기적 유전자|망할번역출판사|리처드 도킨스|김포공항|Y|
-|1113313|1424524121231|이기적 유전자|망할번역출판사|리처드 도킨스|미오시티 도서관|Y|
-|200|1424524121232|Test| |Test|(null)|(null)|
-|1234567|1234567890123|기계전쟁|비젼아이원|조민석|중봉도서관|N|
-|1345678|1425625666555|With Regard To DEATH|Overwatch|Gabriel Reyes|National Overwatch Libra!|Y|
-|1345679|1444325556222|The possibility of time !|Overwatch|Winston|National Overwatch Libra!|Y|
-|3333333|2345678901234|과학북스|미래와현재|장대호|숭실대 본 도서관|Y|

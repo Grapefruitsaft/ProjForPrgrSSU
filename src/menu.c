@@ -53,7 +53,7 @@ int Member_menu()
 			case 1 : Search_books(); break;
 			case 2 : My_BB_list(); break;
 			case 3 : Revise(); break;
-			case 4 : rtnvalue = Sign_down();
+			case 4 : rtnvalue = Sign_down(); break;
 			case 5 : return 0;
 			case 6 : return -2;
 			default : printf("잘못 입력했습니다. 다시 입력해 주세요.");
@@ -77,9 +77,8 @@ void Search_books()
 		printf("\n>> 도서 검색 <<\n");
 		printf("1. 도서명 검색\t\t2. 출판사 검색\n3. ISBN 검색\t\t4. 저자명 검색\n5. 전체 검색\t\t6. 이전메뉴\n");
 		printf("번호를 선택하세요: ");
-		while(getchar() != '\n');
 		scanf("%d", &o);
-
+		while(getchar() != '\n');
 		switch(o)
 		{
 			case 1 : S_by_title(); break;
@@ -100,11 +99,11 @@ void Search_books()
 
 void S_by_title()
 {
-	char s_temp_c[100];//사용자가 입력하는 도서명 입력받는 배열
+	char s_temp_c[300];//사용자가 입력하는 도서명 입력받는 배열
 	printf("\n>> 도서명 검색 <<\n");
 	printf("도서명을 입력하세요 : ");
-	while(getchar() != '\n');
 	scanf("%[^\n]s", s_temp_c);
+	while(getchar() != '\n');
 	int keys[100];//입력받는 도서명과 일치하는 도서번호를 입력받는 배열
 	int cnt, i, cy=0;
 	char yn = 'Y';
@@ -147,11 +146,12 @@ void S_by_title()
 
 void S_by_publisher()
 {
-	char s_temp_c[100];//사용자가 입력하는 출판사명을 입력받는 배열
+	char s_temp_c[300];//사용자가 입력하는 출판사명을 입력받는 배열
 	printf("\n>> 출판사 검색 <<\n");
 	printf("출판사명을 입력하세요 : ");
-	while(getchar() != '\n');
 	scanf("%[^\n]s", s_temp_c);
+	while(getchar() != '\n');
+
 	int keys[100];//입력받은 출판사명과 일치하는 도서들의 번호를 입력하는 배열
 	int cnt_r,cnt_g, i;
 
@@ -196,7 +196,6 @@ void S_by_ISBN()
 	int long s_temp_l;//사용자가 입력하는 ISBN을입력받는 변수
 	printf("\n>> ISBN 검색 <<\n");
 	printf("ISBN을 입력하세요 : ");
-	while(getchar() != '\n');
 	scanf("%ld", &s_temp_l);
 	int keys[100];//입력받은 ISBN과 일치하는 도서의 번호를 입력받는 배열
 	int cnt, i, cy=0;
@@ -243,11 +242,11 @@ void S_by_ISBN()
 
 void S_by_author()
 {
-	char s_temp_c[100];//사용자가 입력하는 저자명을  저장하는 변수
+	char s_temp_c[300];//사용자가 입력하는 저자명을  저장하는 변수
 	printf("\n>> 저자명 검색 <<\n");
 	printf("저자명을 입력하세요 : ");
-	while(getchar() != '\n');
 	scanf("%[^\n]s", s_temp_c);
+	while(getchar() != '\n');
 	int keys[100];//입력받은 저자명과 일치하는 도서의 번호를 입력받는 변수
 	int cnt_r,cnt_g, i;
 
@@ -390,7 +389,7 @@ void Register_book()
 	Btemp = &add;
 	int Y_N = '0';
 
-	char input[30];
+	char input[500];
 	getchar();
 	printf("도서명: ");
 	scanf("%[^\n]s", input);
@@ -470,7 +469,7 @@ void Delete_book()
 
 void D_by_title()
 {
-	char d_temp_c[50];//삭제할 도서명을 입력받는 변수
+	char d_temp_c[300];//삭제할 도서명을 입력받는 변수
 	printf("도서명을 입력하세요 : ");
 	while(getchar() != '\n');
 	scanf("%[^\n]s", d_temp_c);
@@ -575,12 +574,13 @@ void Lend_book()
 
 void L_by_title()
 {
-	char l_temp_c[100];//대여할 도서명을 입력받는 변수
+	char l_temp_c[300];//대여할 도서명을 입력받는 변수
 	int sch_id, book_n;
 	char YorN;
 	while(getchar() != '\n');
 	printf("도서명을 입력하세요: ");
 	scanf("%[^\n]s", l_temp_c);
+	while(getchar() != '\n');
 	int keys[100];//대여할 도서명과 일치하는 도서들의 번호를 입력받는 배열
 	int cnt, i;
 	if((cnt = name2keys_on_book(keys, l_temp_c)) != 0)//대여할 도서명과 일치하는 도서들의 번호를 입력받는다
@@ -974,11 +974,12 @@ void Member_list()
 
 void Search_name()
 {
-	char s_temp_c[30];
+	char s_temp_c[500];
 	while(getchar() != '\n');
 	printf(">> 이름 검색 <<\n");
 	printf("이름을 입력하세요 : ");
 	scanf("%[^\n]s", s_temp_c);
+	while(getchar() != '\n');
 	int keys[20];
 	int cnt, i;
 	if((cnt = name2keys_on_client(keys, s_temp_c)) != 0)

@@ -360,7 +360,6 @@ void My_BB_list()
 int Admin_menu()
 {
 	int o;
-	//int rtnvalue = 0;
 	while(1)
 	{
 		printf(">> 관리자  메뉴 <<\n");
@@ -381,8 +380,6 @@ int Admin_menu()
 			default : printf("잘못 입력했습니다. 다시 입력해 주세요.\n");
 		}
 
-		//if (rtnvalue < 0)
-		//	return rtnvalue + 1;
 	}
 }
 
@@ -856,7 +853,7 @@ void Return_book()
 				const time_t RT = result -> return_day;
 				bt = localtime(&BT);
 
-				if(get_book(keys[i], &Binfo) == Success)//
+				if(get_book(keys[i], &Binfo) == Success)//대여정보에 해당하는 책정보를 받는다.
 				{
 					printf("도서번호: %d\n도서명: %s\n", result  -> book_num,Binfo -> name);
 					printf("대여일자: %d년 %d월 %d일 %s\n", bt -> tm_year  + 1900, bt -> tm_mon + 1, bt -> tm_mday, day[bt -> tm_wday]);
@@ -887,9 +884,9 @@ void Return_book()
 		{
 
 			const Book *itemp = NULL;
-			if(get_book(book_n, &itemp) == Success)
+			if(get_book(book_n, &itemp) == Success)//대여정보에 일치하는 책 정보를 불러온다.
 			{
-				Book pick;
+				Book pick;//대여정보를 변경하기위해 구조체에 책정보를 옮겨쓴다.
 
 				pick.book_num = itemp -> book_num;
 
@@ -907,11 +904,11 @@ void Return_book()
 				pick.owner = (char *)malloc(sizeof(char) * (strlen(itemp -> owner) +1));
 				strcpy(pick.owner, itemp -> owner);
 
-				pick.borrow_Y_N = 'Y';
+				pick.borrow_Y_N = 'Y';//대여정보 수정
 
 				Return_Flags flag;
 
-				if((flag = replace_book(itemp, pick)) == Success)
+				if((flag = replace_book(itemp, pick)) == Success)//책정보를 수정한다
 				{
 					if(remove_borrow(book_n) == Success)
 					{
@@ -984,12 +981,12 @@ void Search_name()
 	while(getchar() != '\n');
 	int keys[20];
 	int cnt, i;
-	if((cnt = name2keys_on_client(keys, s_temp_c)) != 0)
+	if((cnt = name2keys_on_client(keys, s_temp_c)) != 0)//입력받은 이름과 일치하는 회원의 학번을 저장한다
 	{
 		const Client * result = NULL;
 		printf("\n>> 회원 목록 <<\n\n");
 		for(i = 0; i < cnt; i++)
-			if(get_client(keys[i], &result) == Success)
+			if(get_client(keys[i], &result) == Success)//일치하는 회원들의 정보를 출력한다.
 			{
 				printf("학번: %d\n이름: %s\n주소: %s\n전화번호: %s\n\n", result -> sch_num, result -> name, result -> address, result -> phone_num);
 			}
@@ -1014,7 +1011,7 @@ void Search_ID()
 	printf("학번을 입력하세요 : ");
 	scanf("%d", &s_temp_i);
 	const Client * picker = NULL;
-	if(get_client(s_temp_i, &picker) == Success)
+	if(get_client(s_temp_i, &picker) == Success)//학번과 일치하는 회원정보를 받는다.
 	{
 		printf("\n학번: %d\n이름: %s\n주소: %s\n전화번호: %s\n\n", picker -> sch_num, picker -> name, picker -> address, picker -> phone_num);
 
@@ -1028,12 +1025,12 @@ void Search_ID()
 
 void M_total_search()
 {
-	list_client -> current = list_client -> head;
-	while(list_client->current)
+	list_client -> current = list_client -> head;//리스트 현재 위치를 head로 변경
+	while(list_client->current)//current -> next가 NULL일때까지 반복문을 실행한다.
 	{
 		printf("학번: %d\n이름: %s\n주소: %s\n전화번호: %s\n\n", list_client -> current -> sch_num, list_client -> current -> name, list_client -> current -> address, list_client -> current -> phone_num);
 
-		list_client -> current = list_client -> current -> next;
+		list_client -> current = list_client -> current -> next;//현재 위치를 current -> next로 변경
 	}
 }
 

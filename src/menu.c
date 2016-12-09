@@ -200,6 +200,7 @@ void S_by_ISBN()
 	scanf("%ld", &s_temp_l);
 	int keys[100];//입력받은 ISBN과 일치하는 도서의 번호를 입력받는 배열
 	int cnt, i, cy=0;
+	long  last_ISBN = 0;
 	char yn = 'Y';
 
 	if((cnt = ISBN2keys_on_book(keys, s_temp_l)) != 0)//ISBN과 일치하는 도서의 번호를 받아온다

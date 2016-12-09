@@ -45,7 +45,7 @@ int Member_menu()
 	while(1)
 	{
 		printf("\n>> 회원 메뉴 <<\n");
-		printf("1. 도서 검색\t\t2. 내 대여 목록\n3. 개인정보 수정\t4.회원 탈퇴\n5. 로그아웃\t\t6. 프로그램 종료\n");
+		printf("1. 도서 검색\t\t2. 내 대여 목록\n3. 개인정보 수정\t4. 회원 탈퇴\n5. 로그아웃\t\t6. 프로그램 종료\n");
 		printf("번호를 선택하세요: ");
 		scanf("%d", &m);
 		switch (m)
@@ -199,7 +199,6 @@ void S_by_ISBN()
 	scanf("%ld", &s_temp_l);
 	int keys[100];//입력받은 ISBN과 일치하는 도서의 번호를 입력받는 배열
 	int cnt, i, cy=0;
-	long  last_ISBN = 0;
 	char yn = 'Y';
 
 	if((cnt = ISBN2keys_on_book(keys, s_temp_l)) != 0)//ISBN과 일치하는 도서의 번호를 받아온다
@@ -603,12 +602,10 @@ void L_by_title()
 			printf("학번을 입력하세요: ");
 			scanf("%d", &sch_id);
 			binput -> sch_num = sch_id;
-			printf("%d", binput -> sch_num);
 
 			printf("도서번호를 입력하세요: ");
 			scanf("%d", &book_n);
 			binput -> book_num = book_n;
-			printf("%d", binput -> book_num);
 
 			while(getchar() != '\n');
 
@@ -828,7 +825,7 @@ void L_by_ISBN()
 void Return_book()
 {
 	int r_temp_i;//도서를 반납하는 사용자의 학번을 입력받는 변수
-	int keys[100];//
+	int keys[100];//입력받은 학번과 일치하는 도서번호의 대여번호 저장하는 벼을
 	int cnt, i;
 	char day[7][15] = {"일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"};
 	const Borrow *result = NULL;
